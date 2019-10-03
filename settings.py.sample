@@ -1,0 +1,10 @@
+DATABASES = {
+    "default": {
+        "DBNAME": "dbname",
+        "USERNAME": "username",
+        "PASSWORD": "password",
+        "DB_HOST": "127.0.0.1",
+        "DB_PORT": 5432,
+        "THRESHOLD_IN_SEC": 500
+    }
+}
