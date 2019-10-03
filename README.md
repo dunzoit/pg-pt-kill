@@ -4,7 +4,7 @@ Long running query killer for PostgreSQL DB
 
 **Inspration:** https://www.percona.com/doc/percona-toolkit/LATEST/pt-kill.html
 
-# Setup 
+## Setup 
 ```
 git clone git@github.com:dunzoit/pg-pt-kill.git
 cd pg-pt-kill
@@ -17,7 +17,7 @@ cp settings.py.sample settings.py
 
 Modify `settings.py` to update the connection credentials for your database
 
-# Usage
+## Usage
 ```
 python pt-kill.py -d server1
 ```
