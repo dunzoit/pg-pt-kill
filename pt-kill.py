@@ -6,7 +6,8 @@ import logging
 
 
 def main(argv):
-    logging.basicConfig(filename='slowquery.log', filemode='a', level=logging.DEBUG,
+    logging.basicConfig(filename='slowquery.log', filemode='a',
+                        level=logging.DEBUG,
                         format='%(name)s - %(levelname)s - %(message)s')
     database_config = ""
     try:
@@ -30,15 +31,18 @@ def main(argv):
                               'now() - query_start AS duration, \n'
                               'query, state, client_addr \n'
                               'FROM pg_stat_activity \n'
-                              'WHERE now() - query_start > interval \'%s second\' \n'
+                              'WHERE now() - query_start > interval \n'
+                              '\'%s second\' \n'
                               'AND state = \'active\';')
-    select_running_queries = (select_running_queries % (connection_params["THRESHOLD_IN_SEC"]))
+    select_running_queries = (select_running_queries %
+                              (connection_params["THRESHOLD_IN_SEC"]))
     cursor = conn.cursor()
     cursor.execute(select_running_queries)
     long_running_queries = cursor.fetchall()
     for query in long_running_queries:
         query_details = "PID: %s, DURATION: %s, IP_ADDRESS: %s, QUERY: %s"
-        query_details = query_details % (query[0], query[1], query[4], query[2])
+        query_details = query_details % (query[0], query[1],
+                                         query[4], query[2])
         logging.info(query_details)
 
 
