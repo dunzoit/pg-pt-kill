@@ -1,10 +1,18 @@
 DATABASES = {
-    "default": {
+    "server1": {
         "DBNAME": "dbname",
         "USERNAME": "username",
         "PASSWORD": "password",
         "DB_HOST": "127.0.0.1",
         "DB_PORT": 5432,
         "THRESHOLD_IN_SEC": 500
+    }
+    "server2": {
+        "DBNAME": "dbname2",
+        "USERNAME": "username2",
+        "PASSWORD": "password2",
+        "DB_HOST": "127.0.0.1",
+        "DB_PORT": 5432,
+        "THRESHOLD_IN_SEC": 5
     }
 }
