@@ -10,16 +10,22 @@ def main(argv):
                         level=logging.DEBUG,
                         format='%(name)s - %(levelname)s - %(message)s')
     database_config = ""
+    dry_run = False
     try:
-        opts, args = getopt.getopt(argv, "d:", ["dbconfig="])
+        opts, args = getopt.getopt(argv, "hc:d:", ["config=", "dryrun="])
     except getopt.GetoptError:
-        print('pt-kill.py -d <dbconfig>')
+        print('pt-kill.py -c <config> -d')
         sys.exit(2)
     for opt, arg in opts:
-        if opt == '-d':
+        if opt == '-h':
+            print('pt-kill.py -c <config> -d')
+            sys.exit()
+        elif opt == '-c':
             database_config = arg
-        elif opt in ("-d", "--dbconfig"):
-            print('pt-kill.py -d <dbconfig>')
+        elif opt == '-d':
+            dry_run = arg
+        else:
+            print('pt-kill.py -c <config> -d')
             sys.exit()
     connection_params = DATABASES[database_config]
     conn = psycopg2.connect(dbname=connection_params["DBNAME"],
@@ -43,6 +49,9 @@ def main(argv):
         query_details = "PID: %s, DURATION: %s, IP_ADDRESS: %s, QUERY: %s"
         query_details = query_details % (query[0], query[1],
                                          query[4], query[2])
+        if not dry_run:
+            kill_query = "SELECT pg_cancel_backend(%s)" % query[0]
+            cursor.execute(kill_query)
         logging.info(query_details)
 
 
